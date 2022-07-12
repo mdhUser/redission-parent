@@ -55,7 +55,8 @@ public class AtomicDoubleOpertions {
         log.info("删除当前元素:{}",delete);
 
         //添加并且获得元素
-        flag = atomicDoubleOper.addAndGet(2);
+        flag = atomicDoubleOper.addAndGet(2.1);
+        flag = atomicDoubleOper.addAndGet(0.1);
         log.info("添加并且获得元素:{}",flag);
 
         //获得并且删除元素

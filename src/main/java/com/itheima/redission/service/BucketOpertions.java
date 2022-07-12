@@ -42,6 +42,7 @@ public class BucketOpertions {
 
         //修改BucketOperTest的存活时间为600秒
         anyObjectRBucket.set(anyObject,600, TimeUnit.SECONDS);
+
         timeToLive = anyObjectRBucket.remainTimeToLive();
         log.info("BucketOperTest存活时间：{}",timeToLive/1000);
 
@@ -69,14 +70,14 @@ public class BucketOpertions {
      * @description Buckets批量通用对象通
      */
     public void bucketsOper(){
-        //获得Bucket
-        RBucket<AnyObject> bucketA = redissonClient.getBucket("BucketOpertionsTestA");
         //放入一个元素
         AnyObject anyObject = AnyObject.builder()
                 .name("张三")
                 .age(19)
                 .address("中国上海")
                 .build();
+        //获得Bucket
+        RBucket<AnyObject> bucketA = redissonClient.getBucket("BucketOpertionsTestA");
         //为BucketOperTest添加元素到redis中
         bucketA.set(anyObject);
         //获得Bucket
@@ -85,11 +86,12 @@ public class BucketOpertions {
 
         //获得Buckets
         RBuckets buckets = redissonClient.getBuckets();
+
         //这里的兼具map的属性
         Map<String, AnyObject> bucketsOperMap = buckets.get("BucketOpertionsTestA", "BucketOpertionsTestB");
         log.info("map的元素信息：{}",bucketsOperMap);
         //删除所有元素
-        bucketsOperMap.clear();
+        buckets.delete("BucketOpertionsTestA", "BucketOpertionsTestB");
 
     }
 

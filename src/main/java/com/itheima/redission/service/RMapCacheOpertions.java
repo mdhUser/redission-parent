@@ -2,9 +2,10 @@ package com.itheima.redission.service;
 
 import com.itheima.redission.pojo.AnyObject;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RMap;
 import org.redisson.api.RMapCache;
 import org.redisson.api.RedissonClient;
+import org.redisson.api.map.event.EntryEvent;
+import org.redisson.api.map.event.EntryExpiredListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +29,15 @@ public class RMapCacheOpertions {
 
         //获得hash表，这里RMapOpertions为主key
         RMapCache<String, AnyObject> userInfo = redissonClient.getMapCache("userInfo");
+        int expireListener = userInfo.addListener(new EntryExpiredListener<String, AnyObject>() {
+            @Override
+            public void onExpired(EntryEvent<String, AnyObject> event) {
+                //归还库存
+                log.info("=========key:{}",event.getKey());
+                log.info("=========key:{}",event.getValue());
+            }
+        });
+
         AnyObject anyObjectA = AnyObject.builder().id("1").name("嬴政").age(22).address("秦朝").build();
         AnyObject anyObjectB = AnyObject.builder().id("2").name("李斯").age(22).address("秦朝").build();
         AnyObject anyObjectC = AnyObject.builder().id("3").name("孙悟空").age(22).address("唐").build();

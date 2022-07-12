@@ -2,6 +2,7 @@ package com.itheima.redission;
 
 import com.itheima.redission.service.RMapCacheOpertions;
 import com.itheima.redission.service.RMapOpertions;
+import lombok.SneakyThrows;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,10 @@ public class RMapCacheOpertionsTest {
     @Autowired
     RMapCacheOpertions rMapCacheOpertions;
 
+    @SneakyThrows
     @Test
     public void rMapOperTest(){
         rMapCacheOpertions.rMapCache();
+        Thread.sleep(6000000);
     }
 }

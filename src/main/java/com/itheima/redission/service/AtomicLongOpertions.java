@@ -6,6 +6,8 @@ import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @ClassName AtomicLongOpertions.java
  * @Description 原子整长型操作
@@ -21,6 +23,7 @@ public class AtomicLongOpertions {
         RAtomicLong atomicLongOper = redissonClient.getAtomicLong("AtomicLongOpertions");
         //添加一个从0开始的元素
         atomicLongOper.set(0);
+        atomicLongOper.expire(600, TimeUnit.SECONDS);
         //获得当前元素
         long flag = atomicLongOper.get();
         log.info("获得当前元素:{}",flag);
@@ -53,7 +56,7 @@ public class AtomicLongOpertions {
         boolean delete = atomicLongOper.delete();
         log.info("删除当前元素:{}",delete);
 
-        //添加并且获得元素
+        //添加并且获得元素,如果想批量递减可以传入负数
         flag = atomicLongOper.addAndGet(2);
         log.info("添加并且获得元素:{}",flag);
 

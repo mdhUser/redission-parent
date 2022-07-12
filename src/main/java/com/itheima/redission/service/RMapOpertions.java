@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @ClassName RMapOpertions.java
@@ -34,6 +35,7 @@ public class RMapOpertions {
         userInfo.put(anyObjectA.getId(),anyObjectA);
         userInfo.put(anyObjectB.getId(),anyObjectB);
         userInfo.put(anyObjectC.getId(),anyObjectC);
+        userInfo.expire(30, TimeUnit.SECONDS);
 
         //获得userInfo中所有的key
         Set<String> keySet = userInfo.readAllKeySet();
@@ -68,6 +70,8 @@ public class RMapOpertions {
         //返回结果为之前值【如果返回null,表明之前每页存储过元素】
         AnyObject anyObjectD = AnyObject.builder().id("4").name("如来佛").age(1000000).address("上古").build();
         AnyObject anyObject = userInfo.putIfAbsent(anyObjectD.getId(), anyObjectD);
+        AnyObject anyObjectE = AnyObject.builder().id("4").name("弥勒佛").age(1000000).address("上古").build();
+        anyObject =  userInfo.putIfAbsent(anyObjectE.getId(), anyObjectE);
         //清除所有元素
         userInfo.clear();
 

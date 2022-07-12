@@ -15,7 +15,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @ToString
 public class AnyObject implements Serializable {
-    //222
+
     private String id;
 
     private String name;

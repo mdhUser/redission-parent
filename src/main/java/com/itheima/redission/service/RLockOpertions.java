@@ -81,7 +81,7 @@ public class RLockOpertions {
             long timeToLive = rLock.remainTimeToLive();
             log.info("线程：{}，获得锁，锁存活时间：{}S，加锁状态：{}",Thread.currentThread().getName(),timeToLive/1000,flag);
             //休眠一下
-            Thread.sleep(10000);
+            Thread.sleep(7000);
             //如果主线程未释放，且当前锁未调用unlock方法，则进入到watchDog机制
             //如果主线程未释放，且当前锁调用unlock方法，则直接释放锁
             rLock.unlock();
@@ -99,13 +99,14 @@ public class RLockOpertions {
         //比上面多一个参数，多添加一个锁的有效时间
         boolean flag = false;
 
-            flag = rLock.tryLock(20,4, TimeUnit.SECONDS);
+            flag = rLock.tryLock(12,10, TimeUnit.SECONDS);
             if (flag){
                 long timeToLive = rLock.remainTimeToLive();
                 log.info("线程：{}，获得锁，锁存活时间：{}S，加锁状态：{}",Thread.currentThread().getName(),timeToLive/1000,flag);
                 //休眠一下
-                Thread.sleep(8000);
+                Thread.sleep(3000);
                 log.info("线程：{}，释放锁",Thread.currentThread().getName());
+                rLock.unlock();
             }else {
                 log.info("线程：{}，获得锁失败",Thread.currentThread().getName());
             }
