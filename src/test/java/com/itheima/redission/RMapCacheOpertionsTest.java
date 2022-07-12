@@ -24,6 +24,6 @@ public class RMapCacheOpertionsTest {
     @Test
     public void rMapOperTest(){
         rMapCacheOpertions.rMapCache();
-        Thread.sleep(6000000);
+        Thread.sleep(600000);
     }
 }

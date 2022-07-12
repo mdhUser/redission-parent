@@ -23,7 +23,7 @@ public class RLockOpertionsTest {
 
     @Test
     public void  lockTest() throws InterruptedException{
-        //模拟并发，2个线程同时强同一对象
+        //模拟并发，2个线程同时抢同一对象
         CountDownLatch countDownLatch = new CountDownLatch(2);
         new Thread("name-A"){
             @SneakyThrows
